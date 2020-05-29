@@ -3929,13 +3929,14 @@ its own `textSVG` function which can be used to convert text into a
 
 ::
 
-> text' font d s
->   = (strokeP $ SF.textSVG' (SF.TextOpts font SF.INSIDE_H SF.KERN False d d) s)
->   # lw none
->
-> example = do
->   font <- lin2
->   return $ text' font 5 "Hello" # fc blue ||| text' font 3 "world" # fc green
+> main = do
+>   font <- F.loadFont "/path/to/font.svg"
+>   let
+>     diagram :: Diagram B
+>     diagram =
+>       (F.drop_rect$ F.fit_height 22$ F.svgText def{F.textFont = font} "Hello World!")
+>       # stroke # fc blue # lc blue # bg lightgrey # fillRule EvenOdd # showOrigin
+>   mainWith diagram
 
 For more details and examples, see the `Haddock documentation`__.
 
